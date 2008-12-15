@@ -15,11 +15,12 @@
  * @param boolean $debug
  * @return string
  */
-function cross_app_url_for($appname, $url, $absolute = 'false', $env = null, $debug = 'false')
+function cross_app_url_for($appname, $url, $absolute = false, $env = null, $debug = false)
 {
 
   $initial_app = sfContext::getInstance()->getConfiguration()->getApplication();
   $initial_web_controler = basename(sfContext::getInstance()->getRequest()->getScriptName());
+  $initial_config = sfConfig::getAll();
   // get the environment
   if (is_null($env))
   {
@@ -36,7 +37,8 @@ function cross_app_url_for($appname, $url, $absolute = 'false', $env = null, $de
     $context = sfContext::getInstance($appname);
   }
   $web_url = $context->getController()->genUrl($url, $absolute);
-  sfContext::switchTo($initial_app); // usefull ?
+  sfContext::switchTo($initial_app);
+  sfConfig::add($initial_config);
   unset($context);
 
   //remove initial web controler
