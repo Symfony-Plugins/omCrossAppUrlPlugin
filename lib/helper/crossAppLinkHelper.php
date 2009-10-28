@@ -49,6 +49,10 @@ function cross_app_url_for($appname, $url, $absolute = false, $env = null, $debu
   {
     $script_name.='_'.$env;
   }
+  elseif ($script_name == "frontend")
+  {
+    $script_name="index";
+  }
   $script_name.='.php';
   // check if this file exist
   if (!file_exists(sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$script_name))
